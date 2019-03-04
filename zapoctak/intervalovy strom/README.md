@@ -1,1 +1,1 @@
-Program vyuzivaju datovu strukturu intervalovy strom
+Program vyuzivaj datovu strukturu intervalovy strom
