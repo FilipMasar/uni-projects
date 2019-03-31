@@ -103,74 +103,74 @@ namespace ConsoleApp
     {
         public static void Main(string[] args)
         {
-            List<Animal> animals = new List<Animal>();
-			animals.Add(new Tiger(0,30,20));
-			animals.Add(new Zebra(1,20,15));
-			animals.Add(new Monkey(2,10,6));
-			
-			int freeId = 3;
-			
-			List<Animal> childs = new List<Animal>();
-			
-			int year = 0;
-			// simulation of 50 years in Zoo
-			while(year < 50)
-			{	
-				Console.WriteLine("Year " + year);
-				foreach (var animal in animals)
-				{
-					if(animal.dead == true) continue;
-					
-					if(animal.years >= animal.lifespan)
-					{
-						animal.beDead();
-						continue;
-					}
-					
-					if(animal.years > 0 && animal.years % animal.pregnantPeriod == 0)
-					{
-						animal.haveChild();
-						
-						int childId = freeId;
-						freeId++;
-						int childLifespan = animal.lifespan;
-						int childPregnantPeriod = animal.pregnantPeriod;
-						
-						if(animal is Tiger) {
-							childs.Add(new Tiger(childId, childLifespan, childPregnantPeriod));
-						}
-						else if(animal is Zebra)
-						{
-							childs.Add(new Zebra(childId, childLifespan, childPregnantPeriod));
-						}
-						else if(animal is Monkey)
-						{
-							childs.Add(new Monkey(childId, childLifespan, childPregnantPeriod));
-						}
-						else
-						{
-							Console.WriteLine("Unexpected animal occured in our zoo.");	
-						}
-					}
-					
-					animal.celebrateBday();
-				}
-				
-				animals.AddRange(childs);
-				childs.Clear();
-				
-				year++;
-			}
-			
-			Console.WriteLine("_______________________________________");
-			Console.WriteLine("After 50 years in zoo there are:");
+        	List<Animal> animals = new List<Animal>();
+		animals.Add(new Tiger(0,30,20));
+		animals.Add(new Zebra(1,20,15));
+		animals.Add(new Monkey(2,10,6));
+		
+		int freeId = 3;
+		
+		List<Animal> childs = new List<Animal>();
+		
+		int year = 0;
+		// simulation of 50 years in Zoo
+		while(year < 50)
+		{	
+			Console.WriteLine("Year " + year);
 			foreach (var animal in animals)
 			{
-				if(animal.dead == false)
+				if(animal.dead == true) continue;
+				
+				if(animal.years >= animal.lifespan)
 				{
-					animal.info();	
+					animal.beDead();
+					continue;
 				}
+			
+				if(animal.years > 0 && animal.years % animal.pregnantPeriod == 0)
+				{
+					animal.haveChild();
+					
+					int childId = freeId;
+					freeId++;
+					int childLifespan = animal.lifespan;
+					int childPregnantPeriod = animal.pregnantPeriod;
+					
+					if(animal is Tiger) {
+						childs.Add(new Tiger(childId, childLifespan, childPregnantPeriod));
+					}
+					else if(animal is Zebra)
+					{
+						childs.Add(new Zebra(childId, childLifespan, childPregnantPeriod));
+					}
+					else if(animal is Monkey)
+					{
+						childs.Add(new Monkey(childId, childLifespan, childPregnantPeriod));
+					}
+					else
+					{
+						Console.WriteLine("Unexpected animal occured in our zoo.");	
+					}
+				}
+				
+				animal.celebrateBday();
 			}
-        }
+				
+			animals.AddRange(childs);
+			childs.Clear();
+			
+			year++;
+		}
+			
+		Console.WriteLine("_______________________________________");
+		Console.WriteLine("After 50 years in zoo there are:");
+		foreach (var animal in animals)
+		{
+			if(animal.dead == false)
+			{
+				animal.info();	
+			}
+		}
+	}
     }
 }
