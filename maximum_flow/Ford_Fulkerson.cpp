@@ -79,7 +79,7 @@ vector<int> BFS() {
 		q.pop();
 		
 		for (int i = 0; i < n; i++) {
-            if ( parent[i] == -1 && rGraph[v][i] > 0) {
+			if ( parent[i] == -1 && rGraph[v][i] > 0) {
 				q.push(i);
 				parent[i] = v;
 			}
@@ -87,7 +87,7 @@ vector<int> BFS() {
 	}
 
 	return parent;
-} 
+}
 
 int fordFulkerson() {
 
@@ -99,27 +99,27 @@ int fordFulkerson() {
 
 	// while there is augmenting path from source to sink
 	while(path[sink] != -1) {
-		// find the maximum flow through the path found. 
-        int pathFlow = INT_MAX; 
-        int v = sink;
-        while(v != source) {
+		// find the maximum flow through the path found.
+		int pathFlow = INT_MAX; 
+		int v = sink;
+		while(v != source) {
 			pathFlow = min(pathFlow, rGraph[path[v]][v]);
 			v = path[v];
-        }
-  
-        // update capacities
-        v = sink;
-        while(v != source) {
-			int u = path[v]; 
-            rGraph[u][v] -= pathFlow; 
-            rGraph[v][u] += pathFlow;
+		}
+
+		// update capacities
+		v = sink;
+		while(v != source) {
+			int u = path[v];
+			rGraph[u][v] -= pathFlow;
+			rGraph[v][u] += pathFlow;
 			v = path[v];
-        }
+		}
 
-        // Add path flow to overall flow 
-        maxFlow += pathFlow;
+		// Add path flow to overall flow
+		maxFlow += pathFlow;
 
-        // find another augmenting path
+		// find another augmenting path
 		path = BFS();
 	}
 
