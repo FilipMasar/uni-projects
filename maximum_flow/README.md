@@ -3,12 +3,13 @@ Algorithm for finding maximum flow in a graph.
 # Ford-Fulkerson
 
 ### fordFulkerson()
-Makes an residual graph, which at the beginning is equal to the original graph. (residual graph of a flow network is a graph which indicates additional possible flow).
-Initialize maxFlow to zero. During computation it will be increased and at the end it is returned.
-Main Loop - while there is an augmenting path from source to sink, it finds the maximum possible flow on that path, updates the capacities in residual graph and adds founded flow to the maxFlow variable.
+* Makes an residual graph, which at the beginning is equal to the original graph. (residual graph of a flow network is a graph which indicates additional possible flow).
+* Initialize maxFlow to zero. During computation it will be increased and at the end it is returned.
+* Main Loop - while there is an augmenting path from source to sink, it finds the maximum possible flow on that path, updates the capacities in residual graph and adds founded flow to the maxFlow variable.
 
 ### BFS()
-It is searching for an augmenting path from source to sink (performing standard BFS). It saves the path to a vector, which is returned at the end.
+* It is searching for an augmenting path from source to sink (performing standard BFS).
+* It saves the path to a vector, which is returned at the end.
 
 
 # Input Format
