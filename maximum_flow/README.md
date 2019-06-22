@@ -34,6 +34,7 @@ Every edge is represented by 2 vertices, has its capacity and flow which flows t
 * is used to make the flow from a node which has excess flow.
 * if a vertex has excess flow and there is an adjacent with smaller height it pushes the flow from the vertex to the adjacent with lower height.
 * The amount of pushed flow through the edge is equal to the minimum of excess flow and capacity of an edge.
+* updateReverseEdgeFlow() function is called. It updates backward edge or creates it if it does not exist yet.
 
 ### relabel(int u)
 * is used when a vertex has excess flow and to none of its adjacent "water" cannot be pushed. 
