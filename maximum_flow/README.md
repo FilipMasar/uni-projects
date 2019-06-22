@@ -1,4 +1,4 @@
-Algorithm for finding maximum flow in a graph.
+Algorithms for finding maximum flow in a graph.
 
 # Ford-Fulkerson
 
@@ -10,6 +10,26 @@ Algorithm for finding maximum flow in a graph.
 ### BFS()
 * It is searching for an augmenting path from source to sink (performing standard BFS).
 * It saves the path to a vector, which is returned at the end.
+
+# Goldberg
+
+Every vertex in graph has height and excess flow, which is equal to its inflow minus its outflow.
+Every edge is represented by 2 vertices, has its capacity and flow which flows through that edge.
+
+### goldberg()
+* initialize heights and flow for vertices and edges
+* Main Loop - while there is a vertex that has excess flow, "water" is pushed. If it cannot be pushed, vertex height is increased (vertex is relabeled)
+* At the end it returns excess flow of the sink, which is the maximum possible flow.
+
+### preflow()
+* set height and excess flow of all vertices to 0. Height of source vertex is set to the number of vertices in graph
+* maximize the flow of every edge from source (set its flow to its capacity), update excess flow of adjacent vertices and add backward edge
+
+### overFlowVertex()
+* find index of overflowing Vertex different from source and sink (vertex which has positive excess flow)
+* return its index or -1 if there is no such vertex
+
+### push()
 
 
 # Input Format
