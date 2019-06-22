@@ -44,10 +44,10 @@ Every edge is represented by 2 vertices, has its capacity and flow which flows t
 # Input Format
 Input is loaded from file.
 At the beginning, program ask you to type file name. It has to be located in the same directory as the program.
-When file is loaded, user is asked to enter verteces represented source and sink. **Verteces are counted from zero**
+When file is loaded, user is asked to enter vertices represented source and sink. **Vertices are counted from zero**
 
 ### Input File
-On the first line there has to be one number **n** - number of verteces in graph.
+On the first line there has to be one number **n** - number of vertices in graph.
 Then there is n lines. On each line there is n numbers separated by space which represents the graph as adjacency matrix.
 
 *input.txt* is an example of correct input file
