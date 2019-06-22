@@ -11,6 +11,7 @@ Algorithms for finding maximum flow in a graph.
 * It is searching for an augmenting path from source to sink (performing standard BFS).
 * It saves the path to a vector, which is returned at the end.
 
+
 # Goldberg
 
 Every vertex in graph has height and excess flow, which is equal to its inflow minus its outflow.
@@ -29,7 +30,15 @@ Every edge is represented by 2 vertices, has its capacity and flow which flows t
 * find index of overflowing Vertex different from source and sink (vertex which has positive excess flow)
 * return its index or -1 if there is no such vertex
 
-### push()
+### push(int u)
+* is used to make the flow from a node which has excess flow.
+* if a vertex has excess flow and there is an adjacent with smaller height it pushes the flow from the vertex to the adjacent with lower height.
+* The amount of pushed flow through the edge is equal to the minimum of excess flow and capacity of an edge.
+
+### relabel(int u)
+* is used when a vertex has excess flow and to none of its adjacent "water" cannot be pushed. 
+* it increases height of the vertex so that later we can perform push(). 
+* To increase height, it picks the minimum height of adjacent vertices to whom we can add flow and add 1 to it.
 
 
 # Input Format
