@@ -8,6 +8,6 @@ Suported functions:
 * determinant
 
 ### Running
-'''bash
+```bash
 runhaskell lup-decomposition.hs
-'''
+```
