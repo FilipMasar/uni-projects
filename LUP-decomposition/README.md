@@ -7,3 +7,7 @@ Suported functions:
 * inverse
 * determinant
 
+### Running
+```bash
+runhaskell lup-decomposition.hs
+```
