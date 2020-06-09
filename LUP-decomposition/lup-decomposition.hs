@@ -12,7 +12,7 @@ vectorVectorMul :: Num a => [a] -> [a] -> [[a]]
 vectorVectorMul v w = [[v_elem * w_elem | w_elem <- w] | v_elem <- v]
 
 vectorScalarMul :: Num a => [a] -> a -> [a]
-vectorScalarMul v s = [v_elem*s | v_elem <- v]
+vectorScalarMul v s = map (*s) v
 
 dotProduct :: Num a => [a] -> [a] -> a
 dotProduct v w = sum (zipWith (*) v w)
@@ -27,7 +27,7 @@ matrixSub :: Num a => [[a]] -> [[a]] -> [[a]]
 matrixSub a b = zipWith (zipWith (-)) a b
 
 matrixScalarDiv :: Fractional a => [[a]] -> a -> [[a]]
-matrixScalarDiv a s = [[x/s | x <- a_row] | a_row <- a]
+matrixScalarDiv a s = map (map (/s)) a
 
 identyMatrix :: Num a => Int -> [[a]]
 identyMatrix n = [ [if (i==j) then 1 else 0 | j <- [1..n]] | i <- [1..n]]
@@ -159,17 +159,21 @@ determinant a =
   let (l,u,p) = lup a
       detL = 1
       detU = triangularDet u
-      exchanged = round (rowExchanged p)
-      detPinv = (-1) ^ (length p - exchanged)
+      exchanges = rowExchanges p
+      detPinv = if (exchanges `mod` 2) == 0 then 1 else -1
   in detPinv * detL * detU
 
 triangularDet :: Num a => [[a]] -> a
 triangularDet [[a]] = a
 triangularDet a = (head (head a)) * triangularDet (map tail (tail a))
 
-rowExchanged :: Num a => [[a]] -> a
-rowExchanged [[p]] = p
-rowExchanged p = (head (head p)) + rowExchanged (map tail (tail p))
+rowExchanges :: (Ord a, Num a, Num p) => [[a]] -> p
+rowExchanges [[p]] = 0
+rowExchanges p =
+  let maxIdx = getMaxIndex (map head p)
+      p' = if maxIdx == 0 then (map tail (tail p)) else (map tail (tail (swapRow maxIdx p)))
+      res = if maxIdx == 0 then 0 else 1
+  in res + (rowExchanges p')
 
 
 -- ===================================================================
@@ -208,17 +212,38 @@ inverseTest a =
     putStrLn ("inv(A): \n" ++ matrixToString x) >>
     putStrLn ("Verify: A * inv(A)\n" ++ matrixToString (matrixMul a x))
 
+determinantTest :: [[Rational]] -> IO ()
+determinantTest a =
+  let (l,u,p) = lup a
+      det = determinant a
+      detL = triangularDet l
+      detU = triangularDet u
+      exchanges = rowExchanges p
+      detPinv = if (exchanges `mod` 2) == 0 then 1 else -1
+  in do
+    putStrLn ("A: \n" ++ matrixToString a)
+    putStrLn ("L: \n" ++ matrixToString l)
+    putStrLn ("U: \n" ++ matrixToString u)
+    putStrLn ("P: \n" ++ matrixToString p)
+    putStrLn "Verify:"
+    printf "  Det(L) = %.4f\n" (fromRational detL :: Double)
+    printf "  Det(U) = %.4f\n" (fromRational detU :: Double)
+    printf "  Det(inv(P)) = %.4f\n" (fromRational detPinv :: Double)
+    printf "  Det(A) = %.4f \n" (fromRational det :: Double)
 
-a1 = [[1, 2, 3], [3, 5, 6], [1, 1, 1]]
-a2 = [[1, 2, 1], [3, 4, 7], [5, 7, 0]]
-a3 = [[11, 1, 3, 2], [9, 5, 17, 5], [24, 2, 18, 7], [2, 6, 1, 1]]
-b1 = [1, 1, 1]
-b2 = [1, 2, 3, 4]
+
+
+a1 = [[1,2,3], [3,5,6], [1,1,1]] :: [[Rational]]
+a2 = [[1,2,1], [3,4,7], [5,7,0]] :: [[Rational]]
+a3 = [[11,1,3,2], [9,5,17,5], [24,2,18,7], [2,6,1,1]] :: [[Rational]]
+b1 = [1,1,1] :: [Rational]
+b2 = [1,2,3,4] :: [Rational]
 
 main = do
-  putStrLn "\n-------------   LUP Test   -------------" >> lupTest a1
-  putStrLn "\n-------------  Solve Test  -------------" >> solveTest a3 b2
-  putStrLn "\n------------- Inverse Test -------------" >> inverseTest a2
+  putStrLn "\n-------------     LUP Test     -------------" >> lupTest a1
+  putStrLn "\n-------------    Solve Test    -------------" >> solveTest a3 b2
+  putStrLn "\n-------------   Inverse Test   -------------" >> inverseTest a2
+  putStrLn "\n------------- Determinant Test -------------" >> determinantTest a1
 
 
 
